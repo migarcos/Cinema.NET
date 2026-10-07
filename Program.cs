@@ -1,10 +1,14 @@
 using TicketSales.Components;
+using TicketSales.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+// Add Movie Service  to introduce deoendency injection. 
+// Singleton means one service instance is shared for the app lifetime
+builder.Services.AddSingleton<MovieService>();
 
 var app = builder.Build();
 
