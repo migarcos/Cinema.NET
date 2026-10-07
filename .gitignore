@@ -1,0 +1,43 @@
+# Build output
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.rsuser
+
+# IDE settings
+.vscode/
+*.swp
+
+# Logs
+*.log
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+# Uncomment if you don’t want to commit NuGet restore results
+# *.lock.json
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Publish output
+wwwroot/dist/
+wwwroot/node_modules/
+node_modules/
+
+# ASP.NET scaffolding
+ScaffoldingReadMe.txt
+
+# Environment files
+.env
+.env.*
+
+# JetBrains Rider / ReSharper
+.idea/
+*.DotSettings.user
