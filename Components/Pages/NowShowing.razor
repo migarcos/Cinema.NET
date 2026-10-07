@@ -1,0 +1,28 @@
+﻿@page "/now-showing"
+@rendermode InteractiveServer
+
+@using TicketSales.Models
+@using TicketSales.Services
+
+@inject MovieService MovieService
+
+<PageTitle> Now Showing </PageTitle>
+
+<h1>NOW SHOWING</h1>
+
+@if (MovieService.GetMovies().Count == 0)
+{
+    <p>There are no Movies available </p>
+} else
+{
+    <ul>
+        @foreach (var movie in MovieService.GetMovies())
+        {
+            <li>@movie.Title (@movie.DurationMins min)</li>
+        }
+    </ul>
+}
+
+@code {
+
+}
