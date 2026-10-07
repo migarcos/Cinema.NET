@@ -1,9 +1,77 @@
 ﻿@page "/movies"
+@rendermode InteractiveServer
+
 <PageTitle>Movies</PageTitle>
 
-<h2>Movies</h2>
-<p> Manage the movies</p>
-
+<h1>Movies</h1>
+<p> Movies Movement Control  </p>
+<hr />
+<h2> Available Movies </h2>
+@if (movies.Count == 0)
+{
+    <p> Movies list is Empty! </p>
+}
+else
+{
+    <table class="table">
+        
+    </table>    
+}
+<table class="table">
+    <thead>
+        <tr>
+            <td>Title</td>
+            <td>Duration</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in movies)
+        {
+            <tr>
+            <td>@movie.Title</td>
+            <td>@movie.DurationMins</td>
+        </tr>
+        }
+    </tbody>
+</table>
+<hr />
+<div>
+    <h2>Add Movies</h2>
+    <div class="mb-3">
+        <label class="form-label">
+            Movie Title
+            <input class="form-control" @bind="movieTitle">
+        </label>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">
+            Duration (mins)
+            <input type="number" class="form-control" @bind="movieDuration">
+        </label>
+    </div>
+    <button class="btn btn-primary" @onclick="AddMovie">
+        AddMovie
+    </button>
+</div>
 @code {
+    private string movieTitle = string.Empty;
+    private int? movieDuration;
+    private List<Movie> movies = [];
+    private void AddMovie()
+    {
+        var movie = new Movie
+        {
+            Title = movieTitle,
+            DurationMins = movieDuration ?? 0
+        };
 
+        movies.Add(movie);
+        movieTitle = string.Empty;
+        movieDuration = null;
+    }
+    private class Movie
+    {
+        public string Title { get; set; } = string.Empty;
+        public int DurationMins { get; set; }
+    }
 }
