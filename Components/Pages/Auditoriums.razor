@@ -1,0 +1,90 @@
+@page "/auditoriums"
+@rendermode InteractiveServer
+
+@using TicketSales.Models
+@using TicketSales.Services
+
+@inject AuditoriumService AuditoriumService
+
+<PageTitle> Auditoriums</PageTitle>
+
+<h1> AUDITORIUMS </h1>
+
+<p> Manage the cinema Auditoriums an their seating layouts </p>
+
+<hr />
+<h2>Add Auditorium </h2>
+
+<EditForm Model="@newAuditorium" onValidsubmit="@AddAuditorium"> 
+    <DataAnnotationsValidator />
+
+    <div clas="mb-3">
+        <label class="form-label">Auditorium Name
+            <InputText class="form-control" @bind-Value="newAuditorium.Name" />
+            <ValidationMessage For="@(() => newAuditorium.Name)" />
+        </label>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Number of Rows:
+            <InputNumber class="form-control"  @bind-Value="newAuditorium.Rows" />
+            <ValidationMessage  For="@(() => newAuditorium.Rows)/>
+        </label>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Chairs per Row
+            <InputNumber class="form-control"  @bind-Value="newAuditorium.ChairsPerRow" />
+            <ValidationMessage   For="@(() => newAuditorium.ChairsPerRow)/>
+        </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Add Auditorium</button>
+
+</EditForm>
+
+@if (AuditoriumList.Count == 0)
+{
+    <p>There are no auditoriums registered yet.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Rows</th>
+                <th>Seats per row</th>
+                <th>Capacity</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var auditorium in AuditoriumList)
+            {
+                <tr>
+                    <td>@auditorium.Name</td>
+                    <td>@auditorium.Rows</td>
+                    <td>@auditorium.SeatsPerRow</td>
+                    <td>@auditorium.Seats.Count</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private Auditoriums newAuditorium = new();
+
+    private IReadOnlyList<Auditoriums> AuditoriumList =>
+        AuditoriumService.GetAuditoriums();
+
+    private void AddAuditorium()
+    {
+        AuditoriumService.AddAuditorium(newAuditorium);
+
+        newAuditorium = new Auditoriums();
+    }
+}

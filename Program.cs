@@ -9,6 +9,7 @@ builder.Services.AddRazorComponents()
 // Add Movie Service  to introduce deoendency injection. 
 // Singleton means one service instance is shared for the app lifetime
 builder.Services.AddSingleton<MovieService>();
+builder.Services.AddSingleton<AuditoriumService>();
 
 var app = builder.Build();
 
