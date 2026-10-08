@@ -11,7 +11,7 @@
 <PageTitle>Movies</PageTitle>
 
 <h1>Movies</h1>
-<p> Movies Movement Control  </p>
+<p> Movies Movement Control </p>
 <hr />
 <h2> Available Movies </h2>
 @if (MovieList.Count == 0)
@@ -22,60 +22,90 @@ else
 {
     <table class="table">
         
-    </table>    
+    </table>
 }
 <table class="table">
     <thead>
         <tr>
             <td>TITLE</td>
+            <td>RATING</td>
             <td>DURATION</td>
+            <td>GENRE</td>
+            <td>DESCRIPTION</td>
         </tr>
     </thead>
     <tbody>
         @foreach (var movie in MovieList)
         {
             <tr>
-            <td>@movie.Title</td>
-            <td>@movie.DurationMins</td>
-        </tr>
+                <td>@movie.Title</td>
+                <td>@movie.Rating</td>
+                <td>@movie.DurationMns</td>
+                <td>@movie.Genre</td>
+                <td>@movie.Description</td>
+            </tr>
         }
     </tbody>
 </table>
 <hr />
 <div>
-    <h2>Add Movies</h2>
-    <div class="mb-3">
-        <label class="form-label">
-            Movie Title
-            <input class="form-control" @bind="movieTitle">
-        </label>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">
-            Duration (mins)
-            <input type="number" class="form-control" @bind="movieDuration">
-        </label>
-    </div>
-    <button class="btn btn-primary" @onclick="AddMovie">
-        AddMovie
-    </button>
+    <h2>Add Movie</h2>
+    @*  EditForm is a Blazor component for forms. Microsoft's documentation explains that 
+    EditForm binds to a model and orchestrates validation of Blazor input components. *@
+    <EditForm Model="@newMovie" OnValidSubmit="@AddMovie"> @* OnValidSubmit invokes its callback only when form validation succeeds. *@
+        <DataAnnotationsValidator />
+        <div class="mb-3">
+            <label class="form-label">Title
+                <InputText class="form-control" @bind-Value="newMovie.Title" />
+                @* // Display validation errors specifically associated with newMovie.Title. *@
+                <ValidationMessage For="@(() => newMovie.Title)" /> 
+            </label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Rating
+                <InputText class="form-control" @bind-Value="newMovie.Rating" />
+                <ValidationMessage For="@(() => newMovie.Rating)" />
+            </label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Duration (mins)
+                <InputNumber class="form-control" @bind-Value="newMovie.DurationMns" />
+                <ValidationMessage For="@(() => newMovie.DurationMns)" />
+            </label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Genre
+                <InputText class="form-control" @bind-Value="newMovie.Genre" />
+                <ValidationMessage For="@(() => newMovie.Genre)" />
+            </label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Description
+                <InputTextArea class="form-control" rows="4" @bind-Value="newMovie.Description" />
+                <ValidationMessage For="@(() => newMovie.Description)" />
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary"> Add Movie </button>
+    </EditForm>
+    @* Blazor supplies built-in form input components including 
+    InputText, InputNumber, InputSelect, InputDate, InputCheckbox, and InputTextArea. 
+    These components bind fields to a model and participate in form validation. *@
 </div>
 @code {
-    private string movieTitle = string.Empty;
-    private int? movieDuration;
+    private Movie newMovie = new();
     @* private List<Movie> movies = []; *@ // re
-    private IReadOnlyList<Movie> MovieList => 
+    private IReadOnlyList<Movie> MovieList =>
         MovieService.GetMovies();
+
+    @* The form itself built the Movie object. *@
     private void AddMovie()
     {
-        var movie = new Movie
-        {
-            Title = movieTitle,
-            DurationMins = movieDuration ?? 0
-        };
-
-        MovieService.AddMovie(movie); // movies.Add(movie);
-        movieTitle = string.Empty;
-        movieDuration = null;
+        MovieService.AddMovie(newMovie);
+        newMovie = new Movie();
     }
 }

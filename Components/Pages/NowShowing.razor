@@ -18,7 +18,13 @@
     <ul>
         @foreach (var movie in MovieService.GetMovies())
         {
-            <li>@movie.Title (@movie.DurationMins min)</li>
+            @* Now show like    • Interstellar - PG-13 - Science Fiction - 169 min *@
+            <li> 
+                <strong>@movie.Title</strong>
+                - @movie.Rating
+                - @movie.Genre
+                - @movie.DurationMns mins.
+            </li>
         }
     </ul>
 }
