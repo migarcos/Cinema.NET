@@ -72,6 +72,22 @@ else
             }
         </tbody>
     </table>
+
+    @foreach (var auditorium in AuditoriumList)
+    {
+        <div class="card mt-4">
+            <div class="card-body">
+                <h3 class="card-title">
+                    @auditorium.Name
+                </h3>
+                <p>
+                    Capacity: @auditorium.Chairs.Count chairs
+                </p>
+
+                <ChairLayout Auditorium="@auditorium" />
+            </div>
+        </div>
+    }
 }
 
 

@@ -1,0 +1,28 @@
+@using TicketSales.Models
+
+@if (Auditorium is not null)
+{
+    <div class="chair-layout">
+
+        <div class="screen mb-4">   
+            SCREEN
+        </div>
+
+        @foreach (var row in Auditorium.Chairs.GroupBy(chair => chair.Row))
+        {
+            <div class="chair-row">
+                <span class="row-label"> @row.Key </span>
+                @foreach (var chair in row)
+                {
+                    <button type="button" class="chair" disabled="@(!chair.IsActive)"> @chair.Number </button>
+                }
+            </div>
+        }
+
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Auditorium? Auditorium { get; set; }
+}

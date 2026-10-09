@@ -1,0 +1,42 @@
+.chair-layout {
+    margin-top: 1rem;
+    overflow-x: auto;
+}
+
+.screen {
+    max-width: 500px;
+    padding: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.chair-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.row-label {
+    width: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.chair {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 8px;
+    background-color: #198754;
+    color: white;
+}
+
+.chair:disabled {
+    background-color: #6c757d;
+}
