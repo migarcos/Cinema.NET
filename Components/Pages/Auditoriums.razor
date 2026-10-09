@@ -15,10 +15,10 @@
 <hr />
 <h2>Add Auditorium </h2>
 
-<EditForm Model="@newAuditorium" onValidsubmit="@AddAuditorium"> 
+<EditForm Model="@newAuditorium" onValidSubmit="@AddAuditorium"> 
     <DataAnnotationsValidator />
 
-    <div clas="mb-3">
+    <div class="mb-3">
         <label class="form-label">Auditorium Name
             <InputText class="form-control" @bind-Value="newAuditorium.Name" />
             <ValidationMessage For="@(() => newAuditorium.Name)" />
@@ -28,14 +28,14 @@
     <div class="mb-3">
         <label class="form-label">Number of Rows:
             <InputNumber class="form-control"  @bind-Value="newAuditorium.Rows" />
-            <ValidationMessage  For="@(() => newAuditorium.Rows)/>
+            <ValidationMessage  For="@(() => newAuditorium.Rows)"/>
         </label>
     </div>
 
     <div class="mb-3">
         <label class="form-label">Chairs per Row
             <InputNumber class="form-control"  @bind-Value="newAuditorium.ChairsPerRow" />
-            <ValidationMessage   For="@(() => newAuditorium.ChairsPerRow)/>
+            <ValidationMessage   For="@(() => newAuditorium.ChairsPerRow)"/>
         </label>
     </div>
 
@@ -66,8 +66,8 @@ else
                 <tr>
                     <td>@auditorium.Name</td>
                     <td>@auditorium.Rows</td>
-                    <td>@auditorium.SeatsPerRow</td>
-                    <td>@auditorium.Seats.Count</td>
+                    <td>@auditorium.ChairsPerRow</td>
+                    <td>@auditorium.Chairs.Count</td>
                 </tr>
             }
         </tbody>
@@ -76,15 +76,15 @@ else
 
 
 @code {
-    private Auditoriums newAuditorium = new();
+    private Auditorium newAuditorium = new();
 
-    private IReadOnlyList<Auditoriums> AuditoriumList =>
+    private IReadOnlyList<Auditorium> AuditoriumList =>
         AuditoriumService.GetAuditoriums();
 
     private void AddAuditorium()
     {
         AuditoriumService.AddAuditorium(newAuditorium);
 
-        newAuditorium = new Auditoriums();
+        newAuditorium = new Auditorium();
     }
 }

@@ -24,6 +24,7 @@ public class AuditoriumService
         for (var rowIndex = 0; rowIndex < auditorium.Rows; rowIndex++)
         {
             var row = ((char)('A'+ rowIndex)).ToString();
+            
             for (var chairNumber = 1; 
                 chairNumber <= auditorium.ChairsPerRow;
                 chairNumber++)
