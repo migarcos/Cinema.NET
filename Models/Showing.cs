@@ -17,6 +17,6 @@ public class Showing
     // public TimeOnly Time {get; set; } = new(19, 0);
     public string Time {get; set; } ="19:00";
 
-    [Range(0.01, 99.99, ErrorMessage ="Ticket price must be greater than zero.")]
+    [Range(0.01, 99.99, ErrorMessage ="Ticket price must be greater than zero or lower than 100.")]
     public decimal TicketPrice {get; set; }
 }
