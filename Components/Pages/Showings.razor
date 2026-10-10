@@ -1,0 +1,137 @@
+@page "/showings"
+@rendermode InteractiveServer
+
+@using TicketSales.Models
+@using TicketSales.Services
+
+@inject MovieService MovieService
+@inject AuditoriumService AuditoriumService
+
+@inject ShowingService ShowingService
+
+<PageTitle>Showings</PageTitle>
+
+<h1> SHOWINGS </h1>
+
+<p> Create Movie showings </p>
+
+<hr />
+
+<EditForm Model="@newShowing" OnValidSubmit="@AddShowing">
+
+    <DataAnnotationsValidator />
+
+    <div class="mb-3">
+        <label class="form-label"> Movie
+
+            <InputSelect class="form-select" @bind-Value="newShowing.MovieTitle">
+
+                <option value=""> Select a movie </option>
+
+                @foreach (var movie in MovieService.GetMovies())
+                {
+                    <option value="@movie.Title">  @movie.Title </option>
+                }
+
+            </InputSelect>
+
+            <ValidationMessage For="@(() => newShowing.MovieTitle)" />
+        </label>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">  Auditorium
+
+            <InputSelect class="form-select"
+                        @bind-Value="newShowing.AuditoriumName">
+
+                <option value=""> Select an auditorium </option>
+
+                @foreach (var auditorium in AuditoriumService.GetAuditoriums())
+                {
+                    <option value="@auditorium.Name">
+                        @auditorium.Name
+                    </option>
+                }
+            </InputSelect>
+
+            <ValidationMessage
+                For="@(() => newShowing.AuditoriumName)" />
+        </label>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">
+            Date
+        </label>
+
+        <InputDate class="form-control" @bind-Value="newShowing.Date" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label"> Time
+            <InputText class="form-control"@bind-Value="newShowing.Time" />
+        </label>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label"> Ticket Price
+
+            <InputNumber class="form-control" @bind-Value="newShowing.TicketPrice" />
+
+            <ValidationMessage For="@(() => newShowing.TicketPrice)" />
+        </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Create Showing
+    </button>
+
+</EditForm>
+
+<h2>Scheduled Showings</h2>
+
+@if (ShowingList.Count == 0)
+{
+    <p>No showings scheduled.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Movie</th>
+                <th>Auditorium</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var showing in ShowingList)
+            {
+                <tr>
+                    <td>@showing.MovieTitle</td>
+                    <td>@showing.AuditoriumName</td>
+                    <td>@showing.Date</td>
+                    <td>@showing.Time</td>
+                    <td>@showing.TicketPrice.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Showing newShowing = new();
+
+    private IReadOnlyList<Showing> ShowingList => 
+        ShowingService.GetShowings();
+
+    private void AddShowing()
+    {
+        ShowingService.AddShowing(newShowing);
+        newShowing = new Showing();
+    }
+}

@@ -12,3 +12,8 @@ How to start a new Porject
 How to add a new component
 
     dotnet new razorcomponent -n CompName -o Components/Pages 
+
+## Tree
+Try from CLI the following command to display the project tree
+
+    tree /F
