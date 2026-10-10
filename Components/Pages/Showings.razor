@@ -30,7 +30,7 @@
 
                 @foreach (var movie in MovieService.GetMovies())
                 {
-                    <option value="@movie.Title">  @movie.Title </option>
+                    <option value="@movie.Title"> @movie.Title </option>
                 }
 
             </InputSelect>
@@ -40,10 +40,9 @@
     </div>
 
     <div class="mb-3">
-        <label class="form-label">  Auditorium
+        <label class="form-label"> Auditorium
 
-            <InputSelect class="form-select"
-                        @bind-Value="newShowing.AuditoriumName">
+            <InputSelect class="form-select" @bind-Value="newShowing.AuditoriumName">
 
                 <option value=""> Select an auditorium </option>
 
@@ -55,8 +54,7 @@
                 }
             </InputSelect>
 
-            <ValidationMessage
-                For="@(() => newShowing.AuditoriumName)" />
+            <ValidationMessage For="@(() => newShowing.AuditoriumName)" />
         </label>
     </div>
 
@@ -70,7 +68,18 @@
 
     <div class="mb-3">
         <label class="form-label"> Time
-            <InputText class="form-control"@bind-Value="newShowing.Time" />
+            @* <InputText class="form-control"@bind-Value="newShowing.Time" /> *@
+            <InputSelect class="form-select" @bind-Value="newShowing.Time">
+
+                <option value=""> Select a time </option>
+
+                @foreach (var time in AvailableTimes)
+                {
+                    <option value="@time"> @time </option>
+                }
+
+            </InputSelect>
+            <ValidationMessage For="@(() => newShowing.Time)" />
         </label>
     </div>
 
@@ -126,7 +135,9 @@ else
 @code {
     private Showing newShowing = new();
 
-    private IReadOnlyList<Showing> ShowingList => 
+    private List<string> AvailableTimes = ["15:00", "17:00", "19:00", "21:00"];
+
+    private IReadOnlyList<Showing> ShowingList =>
         ShowingService.GetShowings();
 
     private void AddShowing()
