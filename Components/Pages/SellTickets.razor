@@ -4,6 +4,7 @@
 
 @using TicketSales.Models
 @using TicketSales.Services
+@using TicketSales.Components.Shared
 
 @inject ShowingService ShowingService
 @inject AuditoriumService AuditoriumService
@@ -28,9 +29,49 @@ else
     </p>
 }
 
+@if (auditorium is not null)
+{
+    <hr />
+
+    <h4>Available Chairs</h4>
+
+    <ChairLayout Auditorium="@auditorium" OnChairClicked="SelectChair" />
+}
+
+<hr />
+<h4>Selected Chairs</h4>
+@if (selectedChairs.Count == 0)
+{
+    <p>No chairs selected.</p>
+}
+else
+{
+    <ul>
+        @foreach (var chair in selectedChairs)
+        {
+            <li>@chair.Row@chair.Number</li>
+        }
+    </ul>
+}
+
+<p>
+    Tickets: @selectedChairs.Count
+</p>
+
+<h4>
+    Total: @Total.ToString("C")
+</h4>
+
 @code {
-    [Parameter]
-    public Guid Id { get; set; }
+    [Parameter] public Guid Id { get; set; }
+    private List<SelectedChair> selectedChairs = [];
+    
+    // to calculate ticket total
+    private decimal Total =>
+    showing is null
+        ? 0
+        : selectedChairs.Count *
+          showing.TicketPrice;
 
     private Showing? showing;
     private Auditorium? auditorium;
@@ -40,8 +81,29 @@ else
 
         if (showing is not null)
         {
-            auditorium =AuditoriumService
+            auditorium = AuditoriumService
                 .GetAuditorium(showing.AuditoriumName);
         }
+    }
+
+    private void SelectChair(Chair chair)
+    {
+        var existing = selectedChairs.FirstOrDefault(
+            x =>
+                x.Row == chair.Row &&
+                x.Number == chair.Number);
+
+        if (existing is not null)
+        {
+            selectedChairs.Remove(existing);
+            return;
+        }
+
+        selectedChairs.Add(
+            new SelectedChair
+            {
+                Row = chair.Row,
+                Number = chair.Number
+            });
     }
 }

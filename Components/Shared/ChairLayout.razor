@@ -1,3 +1,4 @@
+@using System.Reflection.Metadata
 @using TicketSales.Models
 
 @if (Auditorium is not null)
@@ -14,7 +15,12 @@
                 <span class="row-label"> @row.Key </span>
                 @foreach (var chair in row)
                 {
-                    <button type="button" class="chair" disabled="@(!chair.IsActive)"> @chair.Number </button>
+                    @* <button type="button" class="chair" disabled="@(!chair.IsActive)"> @chair.Number </button> *@
+                    <button type="button" class="chair" 
+                        disabled="@(!chair.IsActive)"
+                        @onclick="() => OnChairClicked.InvokeAsync(chair)">>
+                        @chair.Number
+                    </button>
                 }
             </div>
         }
@@ -23,6 +29,6 @@
 }
 
 @code {
-    [Parameter]
-    public Auditorium? Auditorium { get; set; }
+    [Parameter]     public Auditorium? Auditorium { get; set; }
+    [Parameter] public EventCallback<Chair> OnChairClicked { get; set; }
 }

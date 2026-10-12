@@ -127,7 +127,8 @@ else
                     <td> @showing.Date </td>
                     <td> @showing.Time </td>
                     <td> @showing.TicketPrice.ToString("C") </td>
-                    <td>  @showing.Id
+                    <td> 
+                        @* Call the SellTickets Page to an specific showing using ID *@
                         <NavLink class="nav-link" href="@($"/showings/sell/{showing.Id}")">
                             Sell Tickets
                         </NavLink>

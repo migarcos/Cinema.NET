@@ -19,6 +19,13 @@ Run these commands to add the Microsoft.EntityFrameworkCore, Microsoft.EntityFra
     dotnet add package Microsoft.EntityFrameworkCore.Sqlite 
     dotnet add package System.Net.Http.Json
 
+### CLI  commands to Run 
+Watch allow look the changes alive
+
+    dotnet build
+    dotnet run 
+    dotnet watch
+
 ## Tree
 Try from CLI the following command to display the project tree
 
