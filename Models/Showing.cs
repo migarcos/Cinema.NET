@@ -13,9 +13,9 @@ public class Showing
     [Required]
     public DateOnly Date {get; set; } = DateOnly.FromDateTime(DateTime.Today);
 
-    [Required]
+    [Required (ErrorMessage = "Time is required.")]
     // public TimeOnly Time {get; set; } = new(19, 0);
-    public string Time {get; set; } ="19:00";
+    public string Time {get; set; } = string.Empty;
 
     [Range(0.01, 99.99, ErrorMessage ="Ticket price must be greater than zero or lower than 100.")]
     public decimal TicketPrice {get; set; }

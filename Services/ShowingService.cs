@@ -15,4 +15,9 @@ public class ShowingService
     {
         showings.Add(showing);
     }
+
+    public Showing? GetShowing(Guid id)
+    {
+        return showings.FirstOrDefault( x => x.Id == id );
+    }
 }

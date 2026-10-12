@@ -1,0 +1,47 @@
+@page "/showings/sell/{Id}"
+
+@rendermode InteractiveServer
+
+@using TicketSales.Models
+@using TicketSales.Services
+
+@inject ShowingService ShowingService
+@inject AuditoriumService AuditoriumService
+
+<PageTitle> Tickets Selling </PageTitle>
+
+<h1> Sell Tickets </h1>
+
+<p>Showing Id: @Id </p>
+
+@if (showing is null)
+{
+    <p>Showing not found</p>
+}
+else
+{
+    <h3> @showing.MovieTitle </h3>
+    <p>@showing.AuditoriumName</p>
+    <p>
+        @showing.Date
+        @showing.Time
+    </p>
+}
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private Showing? showing;
+    private Auditorium? auditorium;
+    protected override void OnParametersSet()
+    {
+        showing = ShowingService.GetShowing(Id);
+
+        if (showing is not null)
+        {
+            auditorium =AuditoriumService
+                .GetAuditorium(showing.AuditoriumName);
+        }
+    }
+}

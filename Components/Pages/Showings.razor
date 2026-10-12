@@ -114,6 +114,7 @@ else
                 <th>Date</th>
                 <th>Time</th>
                 <th>Price</th>
+                <th>Actions</th>
             </tr>
         </thead>
 
@@ -121,11 +122,16 @@ else
             @foreach (var showing in ShowingList)
             {
                 <tr>
-                    <td>@showing.MovieTitle</td>
-                    <td>@showing.AuditoriumName</td>
-                    <td>@showing.Date</td>
-                    <td>@showing.Time</td>
-                    <td>@showing.TicketPrice.ToString("C")</td>
+                    <td> @showing.MovieTitle </td>
+                    <td> @showing.AuditoriumName </td>
+                    <td> @showing.Date </td>
+                    <td> @showing.Time </td>
+                    <td> @showing.TicketPrice.ToString("C") </td>
+                    <td>
+                        <NavLink class="nav-link" href="@($"/showings/sell/{showing.Id}")">
+                            Sell Tickets
+                        </NavLink>
+                    </td>
                 </tr>
             }
         </tbody>

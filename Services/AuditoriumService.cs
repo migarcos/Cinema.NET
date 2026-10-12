@@ -37,4 +37,9 @@ public class AuditoriumService
             }
         }
     }
+
+    public Auditorium? GetAuditorium(string name)
+    {
+        return auditoriums.FirstOrDefault(x => x.Name == name);
+    }
 }

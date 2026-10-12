@@ -13,6 +13,12 @@ How to add a new component
 
     dotnet new razorcomponent -n CompName -o Components/Pages 
 
+Run these commands to add the Microsoft.EntityFrameworkCore, Microsoft.EntityFrameworkCore.Sqlite, and System.Net.Http.Json packages:
+
+    dotnet add package Microsoft.EntityFrameworkCore 
+    dotnet add package Microsoft.EntityFrameworkCore.Sqlite 
+    dotnet add package System.Net.Http.Json
+
 ## Tree
 Try from CLI the following command to display the project tree
 
