@@ -3,6 +3,8 @@ namespace TicketSales.Models;
 
 public class Auditorium
 {
+    public Guid Id { get; set; } = Guid.NewGuid();
+    
     [Required(ErrorMessage = "Name is reuired.")]
     [StringLength(100, ErrorMessage = "Auditorium name cannot exceed 100 characters.")]
     public string Name { get; set; } = string.Empty;

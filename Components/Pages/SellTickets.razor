@@ -91,7 +91,7 @@ else
 @code {
     [Parameter] public Guid Id { get; set; }
     private List<SelectedChair> selectedChairs = [];
-    
+    private readonly List<Sale> sales = [];  // save purchases in memory
     // to calculate ticket total
     private decimal Total => showing is null ? 0 : selectedChairs.Count * showing.TicketPrice;
 

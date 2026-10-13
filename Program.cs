@@ -1,8 +1,16 @@
 using TicketSales.Components;
 using TicketSales.Services;
+using Microsoft.EntityFrameworkCore;
+using TicketSales.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// AddDbContext together with UseSqlite(...) is the standard EF Core registration pattern
+builder.Services.AddDbContext<CinemaContext>(options =>
+{
+    options.UseSqlite(
+        builder.Configuration.GetConnectionString("CinemaDb"));
+});
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();

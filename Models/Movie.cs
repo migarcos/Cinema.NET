@@ -6,6 +6,7 @@ namespace TicketSales.Models;
 
 public class Movie
 {
+    public Guid Id { get; set; } = Guid.NewGuid();
     [Required(ErrorMessage = "Title is required")]
     [StringLength(150, ErrorMessage = "Max Lenght 150 chars")]
     public string Title { get; set; } = string.Empty;

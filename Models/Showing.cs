@@ -6,9 +6,15 @@ public class Showing
 
     [Required(ErrorMessage ="Movie is required.")]
     public string MovieTitle {get; set; } = string.Empty;
+    public Guid MovieId { get; set; }
 
     [Required(ErrorMessage ="Auditorium is required.")]
     public string AuditoriumName {get; set; } = string.Empty;
+    public Guid AuditoriumId { get; set; }
+
+    public Movie? Movie { get; set; }
+
+    public Auditorium? Auditorium { get; set; }
 
     [Required]
     public DateOnly Date {get; set; } = DateOnly.FromDateTime(DateTime.Today);
