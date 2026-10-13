@@ -13,36 +13,6 @@
 <p> Manage the cinema Auditoriums an their seating layouts </p>
 
 <hr />
-<h2>Add Auditorium </h2>
-
-<EditForm Model="@newAuditorium" onValidSubmit="@AddAuditorium"> 
-    <DataAnnotationsValidator />
-
-    <div class="mb-3">
-        <label class="form-label">Auditorium Name
-            <InputText class="form-control" @bind-Value="newAuditorium.Name" />
-            <ValidationMessage For="@(() => newAuditorium.Name)" />
-        </label>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Number of Rows:
-            <InputNumber class="form-control"  @bind-Value="newAuditorium.Rows" />
-            <ValidationMessage  For="@(() => newAuditorium.Rows)"/>
-        </label>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Chairs per Row
-            <InputNumber class="form-control"  @bind-Value="newAuditorium.ChairsPerRow" />
-            <ValidationMessage   For="@(() => newAuditorium.ChairsPerRow)"/>
-        </label>
-    </div>
-
-    <button type="submit" class="btn btn-primary">
-        Add Auditorium</button>
-
-</EditForm>
 
 @if (AuditoriumList.Count == 0)
 {
@@ -73,7 +43,7 @@ else
         </tbody>
     </table>
 
-    @foreach (var auditorium in AuditoriumList)
+    @* @foreach (var auditorium in AuditoriumList)
     {
         <div class="card mt-4">
             <div class="card-body">
@@ -87,8 +57,39 @@ else
                 <ChairLayout Auditorium="@auditorium" />
             </div>
         </div>
-    }
+    } *@
 }
+<hr />
+<h2>Add Auditorium </h2>
+
+<EditForm Model="@newAuditorium" onValidSubmit="@AddAuditorium"> 
+    <DataAnnotationsValidator />
+
+    <div class="mb-3">
+        <label class="form-label">Auditorium Name
+            <InputText class="form-control" @bind-Value="newAuditorium.Name" />
+            <ValidationMessage For="@(() => newAuditorium.Name)" />
+        </label>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Number of Rows:
+            <InputNumber class="form-control"  @bind-Value="newAuditorium.Rows" />
+            <ValidationMessage  For="@(() => newAuditorium.Rows)"/>
+        </label>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Chairs per Row
+            <InputNumber class="form-control"  @bind-Value="newAuditorium.ChairsPerRow" />
+            <ValidationMessage   For="@(() => newAuditorium.ChairsPerRow)"/>
+        </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Add Auditorium</button>
+
+</EditForm>
 
 
 @code {

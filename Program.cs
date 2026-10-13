@@ -17,11 +17,12 @@ builder.Services.AddRazorComponents()
 // Add Movie Service  to introduce deoendency injection. 
 // Singleton means one service instance is shared for the app lifetime
 // builder.Services.AddSingleton<MovieService>();
+// builder.Services.AddSingleton<AuditoriumService>();
+builder.Services.AddSingleton<ShowingService>();
 
 // A DbContext is scoped. A Singleton service cannot safely depend on a scoped DbContext.
 builder.Services.AddScoped<MovieService>();
-builder.Services.AddSingleton<AuditoriumService>();
-builder.Services.AddSingleton<ShowingService>();
+builder.Services.AddScoped<AuditoriumService>();
 
 var app = builder.Build();
 
