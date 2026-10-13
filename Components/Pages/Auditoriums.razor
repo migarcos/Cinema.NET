@@ -27,6 +27,7 @@ else
                 <th>Rows</th>
                 <th>Seats per row</th>
                 <th>Capacity</th>
+                <th>Actions</th>
             </tr>
         </thead>
 
@@ -38,6 +39,16 @@ else
                     <td>@auditorium.Rows</td>
                     <td>@auditorium.ChairsPerRow</td>
                     <td>@auditorium.Chairs.Count</td>
+                    <td>
+                        <button type="button" class="btn btn-warning btn-sm" @onclick="() => EditAuditorium(auditorium)">
+                            Edit
+                        </button>
+
+                        <button type="button" class="btn btn-danger btn-sm ms-2"
+                                @onclick="() => DeleteAuditorium(auditorium.Id)">
+                            Delete
+                        </button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -62,7 +73,7 @@ else
 <hr />
 <h2>Add Auditorium </h2>
 
-<EditForm Model="@newAuditorium" onValidSubmit="@AddAuditorium"> 
+<EditForm Model="@newAuditorium" onValidSubmit="@AddAuditorium" FormName="AuditoriumForm">
     <DataAnnotationsValidator />
 
     <div class="mb-3">
@@ -74,34 +85,60 @@ else
 
     <div class="mb-3">
         <label class="form-label">Number of Rows:
-            <InputNumber class="form-control"  @bind-Value="newAuditorium.Rows" />
-            <ValidationMessage  For="@(() => newAuditorium.Rows)"/>
+            <InputNumber class="form-control" @bind-Value="newAuditorium.Rows" />
+            <ValidationMessage For="@(() => newAuditorium.Rows)" />
         </label>
     </div>
 
     <div class="mb-3">
         <label class="form-label">Chairs per Row
-            <InputNumber class="form-control"  @bind-Value="newAuditorium.ChairsPerRow" />
-            <ValidationMessage   For="@(() => newAuditorium.ChairsPerRow)"/>
+            <InputNumber class="form-control" @bind-Value="newAuditorium.ChairsPerRow" />
+            <ValidationMessage For="@(() => newAuditorium.ChairsPerRow)" />
         </label>
     </div>
 
     <button type="submit" class="btn btn-primary">
-        Add Auditorium</button>
+        @(isEditing ? "Update Auditorium" : "Add Auditorium")
+    </button>
 
-</EditForm>
+    </EditForm>
 
 
 @code {
     private Auditorium newAuditorium = new();
-
+    private bool isEditing; // To tarck if the instance is Editing
     private IReadOnlyList<Auditorium> AuditoriumList =>
         AuditoriumService.GetAuditoriums();
-
     private void AddAuditorium()
     {
-        AuditoriumService.AddAuditorium(newAuditorium);
+        if (isEditing)
+        {
+            AuditoriumService.UpdateAuditorium(newAuditorium);
+            isEditing = false;
+        }
+        else
+        {
+            AuditoriumService.AddAuditorium(newAuditorium);
+        }
 
         newAuditorium = new Auditorium();
+    }
+
+    private void EditAuditorium(Auditorium auditorium)
+    {
+        newAuditorium = new Auditorium
+        {
+            Id = auditorium.Id,
+            Name = auditorium.Name,
+            Rows = auditorium.Rows,
+            ChairsPerRow = auditorium.ChairsPerRow
+        };
+
+        isEditing = true;
+    }
+
+    private void DeleteAuditorium(Guid id)
+    {
+        AuditoriumService.DeleteAuditorium(id);
     }
 }

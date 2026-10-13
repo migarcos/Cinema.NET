@@ -54,4 +54,34 @@ public class AuditoriumService
             .Include(a => a.Chairs)
             .FirstOrDefault(a => a.Name == name);
     }
+
+    public void UpdateAuditorium(Auditorium auditorium)
+    {
+        var existingAuditorium =
+            context.Auditoriums
+                .Include(a => a.Chairs)
+                .FirstOrDefault(a => a.Id == auditorium.Id);
+
+        if (existingAuditorium is null)
+            return;
+
+        existingAuditorium.Name = auditorium.Name;
+
+        context.SaveChanges();
+    }
+
+    public void DeleteAuditorium(Guid id)
+    {
+        var auditorium =
+            context.Auditoriums
+                .Include(a => a.Chairs)
+                .FirstOrDefault(a => a.Id == id);
+
+        if (auditorium is null)
+            return;
+
+        context.Auditoriums.Remove(auditorium);
+
+        context.SaveChanges();
+    }
 }
