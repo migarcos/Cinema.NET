@@ -1,14 +1,28 @@
+using Microsoft.EntityFrameworkCore;
+using TicketSales.Data;
 using TicketSales.Models;
+
 namespace TicketSales.Services;
 public class MovieService
 {
-    private readonly List<Movie> movies = [];   // outside classes can't access movies directly only using GetMovies
-    public IReadOnlyList<Movie> GetMovies()     // don´t manipulate the collection directly
+    private readonly CinemaContext context;
+
+    public MovieService(CinemaContext context)
     {
-        return movies;
+        this.context = context;
     }
-    public void AddMovie(Movie movie)   // The UI should use it, instead of movie.Add(movie)
+
+    public IReadOnlyList<Movie> GetMovies()
     {
-        movies.Add(movie);
+        return context.Movies
+            .OrderBy(m => m.Title)
+            .ToList();
+    }
+
+    public void AddMovie(Movie movie)
+    {
+        context.Movies.Add(movie);
+
+        context.SaveChanges();
     }
 }
