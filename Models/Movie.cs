@@ -1,8 +1,7 @@
 // MS recommends Data Annotations on the model together with 
 // DataAnnotationsValidator in an EditForm for straightforward Blazor form validation
 using System.ComponentModel.DataAnnotations;
-using TicketSales.Components.Pages;
-
+// using TicketSales.Components.Pages;
 namespace TicketSales.Models;
 
 public class Movie

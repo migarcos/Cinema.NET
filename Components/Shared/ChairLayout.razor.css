@@ -37,6 +37,15 @@
     color: white;
 }
 
+.chair-selected {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 8px;
+    background-color: #0d6efd;
+    color: white;
+}
+
 .chair:disabled {
     background-color: #6c757d;
 }

@@ -34,13 +34,25 @@ else
     <hr />
 
     <h4>Available Chairs</h4>
+    <div class="mb-3">
+        <span class="badge bg-success">
+            Available
+        </span>
 
-    <ChairLayout Auditorium="@auditorium" OnChairClicked="SelectChair" />
+        <span class="badge bg-primary ms-2">
+            Selected
+        </span>
+
+        <span class="badge bg-secondary ms-2">
+            Unavailable
+        </span>
+    </div>
+    <ChairLayout Auditorium="@auditorium" SelectedChairs="@selectedChairs" OnChairClicked="SelectChair"/>
 }
 
 <hr />
 <h4>Selected Chairs</h4>
-@if (selectedChairs.Count == 0)
+@* @if (selectedChairs.Count == 0)
 {
     <p>No chairs selected.</p>
 }
@@ -52,26 +64,36 @@ else
             <li>@chair.Row@chair.Number</li>
         }
     </ul>
+} *@
+@if (selectedChairs.Any())
+{
+    <p>
+        Selected:
+        @string.Join(", ",
+            selectedChairs.Select(c => $"{c.Row}{c.Number}"))
+    </p>
 }
-
 <p>
-    Tickets: @selectedChairs.Count
+    Tickets: 
+    @selectedChairs.Count
 </p>
 
 <h4>
-    Total: @Total.ToString("C")
+    Total:
+    @Total.ToString("C")
 </h4>
+
+<button class="btn btn-success"
+        disabled="@(!selectedChairs.Any())">
+    Confirm Purchase
+</button>
 
 @code {
     [Parameter] public Guid Id { get; set; }
     private List<SelectedChair> selectedChairs = [];
     
     // to calculate ticket total
-    private decimal Total =>
-    showing is null
-        ? 0
-        : selectedChairs.Count *
-          showing.TicketPrice;
+    private decimal Total => showing is null ? 0 : selectedChairs.Count * showing.TicketPrice;
 
     private Showing? showing;
     private Auditorium? auditorium;

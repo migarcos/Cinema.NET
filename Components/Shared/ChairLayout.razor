@@ -5,7 +5,7 @@
 {
     <div class="chair-layout">
 
-        <div class="screen mb-4">   
+        <div class="screen mb-4">
             SCREEN
         </div>
 
@@ -16,9 +16,10 @@
                 @foreach (var chair in row)
                 {
                     @* <button type="button" class="chair" disabled="@(!chair.IsActive)"> @chair.Number </button> *@
-                    <button type="button" class="chair" 
-                        disabled="@(!chair.IsActive)"
-                        @onclick="() => OnChairClicked.InvokeAsync(chair)">>
+                    <button type="button" 
+                            class="@(IsSelected(chair) ? "chair-selected" : "chair")" 
+                            disabled="@(!chair.IsActive)"
+                            @onclick="() => OnChairClicked.InvokeAsync(chair)">
                         @chair.Number
                     </button>
                 }
@@ -29,6 +30,13 @@
 }
 
 @code {
-    [Parameter]     public Auditorium? Auditorium { get; set; }
+    [Parameter]  public Auditorium? Auditorium { get; set; }
     [Parameter] public EventCallback<Chair> OnChairClicked { get; set; }
+    [Parameter] public List<SelectedChair> SelectedChairs { get; set; } = [];
+    private bool IsSelected(Chair chair)
+    {
+        return SelectedChairs.Any(x =>
+            x.Row == chair.Row &&
+            x.Number == chair.Number);
+    }
 }
