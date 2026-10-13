@@ -32,6 +32,7 @@ else
             <td>DURATION</td>
             <td>GENRE</td>
             <td>DESCRIPTION</td>
+            <th>ACTIONS</th>
         </tr>
     </thead>
     <tbody>
@@ -43,6 +44,15 @@ else
                 <td>@movie.DurationMns</td>
                 <td>@movie.Genre</td>
                 <td>@movie.Description</td>
+                <td>
+                    <button class="btn btn-warning btn-sm" @onclick="() => EditMovie(movie)">
+                        Edit
+                    </button>
+
+                    <button class="btn btn-danger btn-sm ms-2" @onclick="() => DeleteMovie(movie.Id)">
+                        Delete
+                    </button>
+                </td>
             </tr>
         }
     </tbody>
@@ -52,8 +62,8 @@ else
     <h2>Add Movie</h2>
     @*  EditForm is a Blazor component for forms. Microsoft's documentation explains that 
     EditForm binds to a model and orchestrates validation of Blazor input components. *@
-    <EditForm Model="@newMovie" OnValidSubmit="@AddMovie"> @* OnValidSubmit invokes its callback only when form validation succeeds. *@
-        <DataAnnotationsValidator />
+    <EditForm Model="@newMovie" OnValidSubmit="@AddMovie" FormName="MovieForm"> @* OnValidSubmit invokes its callback only when form validation succeeds. *@
+        <DataAnnotationsValidator /> 
         <div class="mb-3">
             <label class="form-label">Title
                 <InputText class="form-control" @bind-Value="newMovie.Title" />
@@ -89,7 +99,7 @@ else
             <label class="form-label">Genre
                 <InputSelect class="form-select" @bind-Value="newMovie.Genre">
 
-                    <option value="">  Select a genre </option>
+                    <option value=""> Select a genre </option>
                     
                     <option value="Action">Action</option>
                     <option value="Adventure">Adventure</option>
@@ -114,7 +124,7 @@ else
             </label>
         </div>
 
-        <button type="submit" class="btn btn-primary"> Add Movie </button>
+        <button type="submit" class="btn btn-primary"> @(isEditing ? "Update Movie" : "Create Movie") </button>
     </EditForm>
     @* Blazor supplies built-in form input components including 
     InputText, InputNumber, InputSelect, InputDate, InputCheckbox, and InputTextArea. 
@@ -123,13 +133,43 @@ else
 @code {
     private Movie newMovie = new();
     @* private List<Movie> movies = []; *@ // re
+    
+    private bool isEditing;
     private IReadOnlyList<Movie> MovieList =>
         MovieService.GetMovies();
 
     @* The form itself built the Movie object. *@
     private void AddMovie()
     {
-        MovieService.AddMovie(newMovie);
+        if (isEditing)
+        {
+            MovieService.UpdateMovie(newMovie);
+            isEditing = false;
+        }
+        else
+        {
+            MovieService.AddMovie(newMovie);
+        }
+
         newMovie = new Movie();
+    }
+    private void EditMovie(Movie movie)
+    {
+        newMovie = new Movie
+        {
+            Id = movie.Id,
+            Title = movie.Title,
+            Genre = movie.Genre,
+            Rating = movie.Rating,
+            DurationMns = movie.DurationMns,
+            Description = movie.Description
+        };
+
+        isEditing = true;
+    }
+
+    private void DeleteMovie(Guid id)
+    {
+        MovieService.DeleteMovie(id);
     }
 }
