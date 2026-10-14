@@ -3,6 +3,15 @@
 Cinema.NET is a Blazor Server application designed to manage cinema operations such as auditoriums, movie showings, and ticket sales.  
 It serves as a teaching project to demonstrate modern .NET development, Blazor components, and clean architecture practices.
 
+![Cinema.Net](/wwwroot/img/home.jpg)
+
+## Business Rules
+
+- Movies must exist before creating a showing.
+- Auditoriums must exist before creating a showing.
+- Ticket prices must be greater than zero.
+- Sold seats cannot be sold again.
+- All information is stored in SQLite.
 ---
 
 ## ✨ Features
@@ -54,7 +63,3 @@ It serves as a teaching project to demonstrate modern .NET development, Blazor c
     ├── Shared/               # Shared components (NavMenu, MainLayout)
     ├── wwwroot/              # Static assets (CSS, JS, icons)
     └── Program.cs            # App startup and DI configuration
-
-## 📜 License
-This project is licensed under the MIT License.
-See [Looks like the result wasn't safe to show. Let's switch things up and try something else!] for details.

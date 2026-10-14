@@ -113,3 +113,12 @@ h1:focus {
 .bg-doc {
     background-color: #072261;
 }
+
+.marc {
+    display: flex;
+    flex-wrap: wrap;
+    label { margin: 1rem }
+    border: solid 2px gray;
+    border-radius: 1rem;
+    padding: 1rem;
+}

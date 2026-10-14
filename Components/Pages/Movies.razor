@@ -62,7 +62,7 @@ else
     <h2>Add Movie</h2>
     @*  EditForm is a Blazor component for forms. Microsoft's documentation explains that 
     EditForm binds to a model and orchestrates validation of Blazor input components. *@
-    <EditForm Model="@newMovie" OnValidSubmit="@AddMovie" FormName="MovieForm"> @* OnValidSubmit invokes its callback only when form validation succeeds. *@
+    <EditForm Model="@newMovie" OnValidSubmit="@AddMovie" FormName="MovieForm" class="marc"> @* OnValidSubmit invokes its callback only when form validation succeeds. *@
         <DataAnnotationsValidator /> 
         <div class="mb-3">
             <label class="form-label">Title
