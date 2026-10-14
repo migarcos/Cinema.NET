@@ -1,40 +1,60 @@
-# CINEMA TICKETS SALE APP
+# 🎬 Cinema.NET
 
-A .Net Blazor project.
-An event venue (in this case, a movie theater) needs to manage access control for its auditoriums. The system should allow for registering movies and their available showtimes, as well as processing ticket sales.
-It should also be capable of generating reports on daily, weekly, and monthly activity.
+Cinema.NET is a Blazor Server application designed to manage cinema operations such as auditoriums, movie showings, and ticket sales.  
+It serves as a teaching project to demonstrate modern .NET development, Blazor components, and clean architecture practices.
 
-## Set-UP
-How to start a new Porject
+---
 
-    dotnet new blazor -n ProjectName
+## ✨ Features
+- **Auditorium Management**: Create and configure auditoriums with seating layouts.
+- **Movie Showings**: Schedule movies with times and auditoriums.
+- **Ticket Sales**: Navigate to ticket-selling pages with dynamic routing.
+- **Validation**: Built-in data annotations for input validation.
+- **Services Layer**: Encapsulated business logic (`AuditoriumService`, `ShowingService`).
+- **Navigation**: Sidebar menu with `NavLink` highlighting active routes.
 
-How to add a new component
+---
 
-    dotnet new razorcomponent -n CompName -o Components/Pages 
+## 🛠️ Tech Stack
+- **.NET 8** (Blazor Server)
+- **C#** for backend logic
+- **Razor Components** for UI
+- **Bootstrap** for styling
+- **Entity Framework Core (optional)** for persistence
 
-Run these commands to add the Microsoft.EntityFrameworkCore, Microsoft.EntityFrameworkCore.Sqlite, and System.Net.Http.Json packages:
+---
 
-    dotnet add package Microsoft.EntityFrameworkCore 
-    dotnet add package Microsoft.EntityFrameworkCore.Sqlite 
-    dotnet add package System.Net.Http.Json
+## 🚀 Getting Started
 
-Creatae first migration
+### Prerequisites
+- [.NET 8 SDK](https://dotnet.microsoft.com/download)
+- Visual Studio 2022 or VS Code
 
-    dotnet ef migrations add InitialCreate
-
-Create database
-
-    dotnet ef database update
-
-### CLI  commands to Run 
-Watch allow look the changes alive
-
-    dotnet build
-    dotnet run 
+### Installation
+1. Clone the repository:
+   ```
+   git clone https://github.com/migarcos/Cinema.NET.git
+   cd Cinema.NET
+2. Restore dependencies
+    ```
+    dotnet restore
+    ```
+3. Run the project:
+    ```bash
+    dotnet run
     dotnet watch
+    ```
 
-## Tree
-Try from CLI the following command to display the project tree
+## 📂 Project Structure
+    Cinema.NET/
+    │
+    ├── Pages/                # Razor pages (Auditoriums.razor, Showings.razor, etc.)
+    ├── Services/             # Business logic services
+    ├── Models/               # Domain models (Movie, Auditorium, Showing, Chair)
+    ├── Shared/               # Shared components (NavMenu, MainLayout)
+    ├── wwwroot/              # Static assets (CSS, JS, icons)
+    └── Program.cs            # App startup and DI configuration
 
-    tree /F
+## 📜 License
+This project is licensed under the MIT License.
+See [Looks like the result wasn't safe to show. Let's switch things up and try something else!] for details.
