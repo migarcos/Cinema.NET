@@ -19,10 +19,14 @@ Run these commands to add the Microsoft.EntityFrameworkCore, Microsoft.EntityFra
     dotnet add package Microsoft.EntityFrameworkCore.Sqlite 
     dotnet add package System.Net.Http.Json
 
-Creatae first migration 
+Creatae first migration
+
     dotnet ef migrations add InitialCreate
+
 Create database
+
     dotnet ef database update
+
 ### CLI  commands to Run 
 Watch allow look the changes alive
 

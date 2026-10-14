@@ -4,12 +4,14 @@ public class Showing
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
-    [Required(ErrorMessage ="Movie is required.")]
-    public string MovieTitle {get; set; } = string.Empty;
+    // [Required(ErrorMessage ="Movie is required.")]
+    // public string MovieTitle {get; set; } = string.Empty;
+    [Required]
     public Guid MovieId { get; set; }
 
-    [Required(ErrorMessage ="Auditorium is required.")]
-    public string AuditoriumName {get; set; } = string.Empty;
+    // [Required(ErrorMessage ="Auditorium is required.")]
+    // public string AuditoriumName {get; set; } = string.Empty;
+    [Required]
     public Guid AuditoriumId { get; set; }
 
     public Movie? Movie { get; set; }

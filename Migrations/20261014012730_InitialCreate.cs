@@ -67,9 +67,7 @@ namespace TicketSales.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    MovieTitle = table.Column<string>(type: "TEXT", nullable: false),
                     MovieId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    AuditoriumName = table.Column<string>(type: "TEXT", nullable: false),
                     AuditoriumId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Date = table.Column<DateOnly>(type: "TEXT", nullable: false),
                     Time = table.Column<string>(type: "TEXT", nullable: false),

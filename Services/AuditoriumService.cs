@@ -48,11 +48,11 @@ public class AuditoriumService
         }
     }
 
-    public Auditorium? GetAuditorium(string name)
+    public Auditorium? GetAuditorium(Guid Id)
     {
         return context.Auditoriums
             .Include(a => a.Chairs)
-            .FirstOrDefault(a => a.Name == name);
+            .FirstOrDefault(a => a.Id == Id);
     }
 
     public void UpdateAuditorium(Auditorium auditorium)

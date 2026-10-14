@@ -108,18 +108,10 @@ namespace TicketSales.Migrations
                     b.Property<Guid>("AuditoriumId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("AuditoriumName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<DateOnly>("Date")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("MovieId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("MovieTitle")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("TicketPrice")

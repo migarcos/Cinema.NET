@@ -21,8 +21,8 @@
 }
 else
 {
-    <h3> @showing.MovieTitle </h3>
-    <p>@showing.AuditoriumName</p>
+    <h3> @showing.Movie?.Title </h3>
+    <p>@showing.Auditorium?.Name</p>
     <p>
         @showing.Date
         @showing.Time
@@ -104,7 +104,7 @@ else
         if (showing is not null)
         {
             auditorium = AuditoriumService
-                .GetAuditorium(showing.AuditoriumName);
+                .GetAuditorium(showing.AuditoriumId);
         }
     }
 

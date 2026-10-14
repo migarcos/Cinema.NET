@@ -11,7 +11,7 @@ using TicketSales.Data;
 namespace TicketSales.Migrations
 {
     [DbContext(typeof(CinemaContext))]
-    [Migration("20261013205656_InitialCreate")]
+    [Migration("20261014012730_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -111,18 +111,10 @@ namespace TicketSales.Migrations
                     b.Property<Guid>("AuditoriumId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("AuditoriumName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<DateOnly>("Date")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("MovieId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("MovieTitle")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("TicketPrice")

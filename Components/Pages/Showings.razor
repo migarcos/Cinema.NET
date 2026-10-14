@@ -3,6 +3,7 @@
 
 @using TicketSales.Models
 @using TicketSales.Services
+@inject NavigationManager Navigation
 
 @inject MovieService MovieService
 @inject AuditoriumService AuditoriumService
@@ -12,49 +13,104 @@
 <PageTitle>Showings</PageTitle>
 
 <h1> SHOWINGS </h1>
-
-<p> Create Movie showings </p>
-
 <hr />
 
-<EditForm Model="@newShowing" OnValidSubmit="@AddShowing">
+<h2>Scheduled Showings</h2>
+
+@if (ShowingList.Count == 0)
+{
+    <p>No showings scheduled.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Movie</th>
+                <th>Auditorium</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var showing in ShowingList)
+            {
+                <tr>
+                    @* // answer the query to show based in the id *@
+                    <td> @showing.Movie?.Title </td>
+                    <td> @showing.Auditorium?.Name </td>
+                    <td> @showing.Date </td>
+                    <td> @showing.Time </td>
+                    <td> @showing.TicketPrice.ToString("C") </td>
+                    <td>
+                        @* Call the SellTickets Page to an specific showing using ID 
+                        <NavLink class="nav-link" href="@($"/showings/sell/{showing.Id}")">
+                            Sell Tickets
+                        </NavLink>*@
+                        <button type="button" class="btn btn-success btn-sm" @onclick="() => SellTickets(showing.Id)">
+                            Sell Tickets
+                        </button>
+
+                        <button type="button" class="btn btn-warning btn-sm" @onclick="() => EditShowing(showing)">
+                            Edit
+                        </button>
+
+                        <button type="button" class="btn btn-danger btn-sm ms-2" @onclick="() => DeleteShowing(showing.Id)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+<hr />
+<p> Create Movie showings </p>
+
+<EditForm Model="@newShowing" OnValidSubmit="@AddShowing" FormName="ShowingForm">
 
     <DataAnnotationsValidator />
 
     <div class="mb-3">
         <label class="form-label"> Movie
 
-            <InputSelect class="form-select" @bind-Value="newShowing.MovieTitle">
+            <InputSelect class="form-select" @bind-Value="newShowing.MovieId">
 
                 <option value=""> Select a movie </option>
 
                 @foreach (var movie in MovieService.GetMovies())
                 {
-                    <option value="@movie.Title"> @movie.Title </option>
+                    <option value="@movie.Id"> @movie.Title </option>
                 }
 
             </InputSelect>
 
-            <ValidationMessage For="@(() => newShowing.MovieTitle)" />
+            @* <ValidationMessage For="@(() => newShowing.MovieTitle)" /> *@
         </label>
     </div>
 
     <div class="mb-3">
         <label class="form-label"> Auditorium
 
-            <InputSelect class="form-select" @bind-Value="newShowing.AuditoriumName">
+            <InputSelect class="form-select" @bind-Value="newShowing.AuditoriumId">
 
                 <option value=""> Select an auditorium </option>
 
                 @foreach (var auditorium in AuditoriumService.GetAuditoriums())
                 {
-                    <option value="@auditorium.Name">
+                    <option value="@auditorium.Id">
                         @auditorium.Name
                     </option>
                 }
             </InputSelect>
 
-            <ValidationMessage For="@(() => newShowing.AuditoriumName)" />
+            @* <ValidationMessage For="@(() => newShowing.AuditoriumName)" /> *@
         </label>
     </div>
 
@@ -98,58 +154,49 @@
 
 </EditForm>
 
-<h2>Scheduled Showings</h2>
-
-@if (ShowingList.Count == 0)
-{
-    <p>No showings scheduled.</p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Movie</th>
-                <th>Auditorium</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Price</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var showing in ShowingList)
-            {
-                <tr>
-                    <td> @showing.MovieTitle </td>
-                    <td> @showing.AuditoriumName </td>
-                    <td> @showing.Date </td>
-                    <td> @showing.Time </td>
-                    <td> @showing.TicketPrice.ToString("C") </td>
-                    <td> 
-                        @* Call the SellTickets Page to an specific showing using ID *@
-                        <NavLink class="nav-link" href="@($"/showings/sell/{showing.Id}")">
-                            Sell Tickets
-                        </NavLink>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-
 @code {
     private Showing newShowing = new();
-
+    private bool isEditing;
     private List<string> AvailableTimes = ["15:00", "17:00", "19:00", "21:00"];
-
     private IReadOnlyList<Showing> ShowingList =>
         ShowingService.GetShowings();
-
     private void AddShowing()
     {
-        ShowingService.AddShowing(newShowing);
+        if (isEditing)
+        {
+            ShowingService.UpdateShowing(newShowing);
+            isEditing = false;
+        }
+        else
+        {
+            ShowingService.AddShowing(newShowing);
+        }
+
         newShowing = new Showing();
+    }
+
+    private void EditShowing(Showing showing)
+    {
+        newShowing = new Showing
+        {
+            Id = showing.Id,
+            MovieId = showing.MovieId,
+            AuditoriumId = showing.AuditoriumId,
+            Date = showing.Date,
+            Time = showing.Time,
+            TicketPrice = showing.TicketPrice
+        };
+
+        isEditing = true;
+    }
+
+    private void DeleteShowing(Guid id)
+    {
+        ShowingService.DeleteShowing(id);
+    }
+
+    private void SellTickets(Guid id)
+    {
+        Navigation.NavigateTo($"/showings/sell/{id}");
     }
 }
