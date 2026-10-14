@@ -25,6 +25,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddScoped<MovieService>();
 builder.Services.AddScoped<AuditoriumService>();
 builder.Services.AddScoped<ShowingService>();
+builder.Services.AddScoped<SaleService>();
 
 var app = builder.Build();
 

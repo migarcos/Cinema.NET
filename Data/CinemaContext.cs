@@ -10,12 +10,10 @@ public class CinemaContext : DbContext
         : base(options)
     {
     }
-
     public DbSet<Movie> Movies => Set<Movie>();
-
     public DbSet<Auditorium> Auditoriums => Set<Auditorium>();
-
     public DbSet<Chair> Chairs => Set<Chair>();
-
     public DbSet<Showing> Showings => Set<Showing>();
+    public DbSet<Sale> Sales => Set<Sale>();
+    public DbSet<SoldChair> SoldChairs => Set<SoldChair>();
 }

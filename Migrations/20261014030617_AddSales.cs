@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TicketSales.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class AddSales : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,6 +39,20 @@ namespace TicketSales.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Movies", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sales",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ShowingId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Total = table.Column<decimal>(type: "TEXT", nullable: false),
+                    SoldAt = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sales", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,6 +104,26 @@ namespace TicketSales.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "SoldChairs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Row = table.Column<string>(type: "TEXT", nullable: false),
+                    Number = table.Column<int>(type: "INTEGER", nullable: false),
+                    SaleId = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SoldChairs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SoldChairs_Sales_SaleId",
+                        column: x => x.SaleId,
+                        principalTable: "Sales",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Chairs_AuditoriumId",
                 table: "Chairs",
@@ -104,6 +138,11 @@ namespace TicketSales.Migrations
                 name: "IX_Showings_MovieId",
                 table: "Showings",
                 column: "MovieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SoldChairs_SaleId",
+                table: "SoldChairs",
+                column: "SaleId");
         }
 
         /// <inheritdoc />
@@ -116,10 +155,16 @@ namespace TicketSales.Migrations
                 name: "Showings");
 
             migrationBuilder.DropTable(
+                name: "SoldChairs");
+
+            migrationBuilder.DropTable(
                 name: "Auditoriums");
 
             migrationBuilder.DropTable(
                 name: "Movies");
+
+            migrationBuilder.DropTable(
+                name: "Sales");
         }
     }
 }

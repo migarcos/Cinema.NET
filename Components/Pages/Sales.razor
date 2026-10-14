@@ -1,0 +1,39 @@
+﻿@page "/sales"
+
+@using TicketSales.Models
+@using TicketSales.Services
+
+@inject SaleService SaleService
+
+<h1>Sales History</h1>
+
+@foreach (var sale in SaleService.GetSales())
+{
+    <div class="card mb-3">
+
+        <div class="card-body">
+
+            <h5>
+                @sale.Total.ToString("C")
+            </h5>
+
+            <p>
+                @sale.SoldAt
+            </p>
+
+            <p>
+                Seats:
+
+                @string.Join(", ",
+                    sale.Chairs.Select(
+                        x => $"{x.Row}{x.Number}"))
+            </p>
+
+        </div>
+
+    </div>
+}
+
+@code {
+
+}

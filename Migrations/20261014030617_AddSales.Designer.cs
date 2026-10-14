@@ -11,8 +11,8 @@ using TicketSales.Data;
 namespace TicketSales.Migrations
 {
     [DbContext(typeof(CinemaContext))]
-    [Migration("20261014012730_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20261014030617_AddSales")]
+    partial class AddSales
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,6 +102,26 @@ namespace TicketSales.Migrations
                     b.ToTable("Movies");
                 });
 
+            modelBuilder.Entity("TicketSales.Models.Sale", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ShowingId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("SoldAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sales");
+                });
+
             modelBuilder.Entity("TicketSales.Models.Showing", b =>
                 {
                     b.Property<Guid>("Id")
@@ -133,6 +153,29 @@ namespace TicketSales.Migrations
                     b.ToTable("Showings");
                 });
 
+            modelBuilder.Entity("TicketSales.Models.SoldChair", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Row")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("SaleId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SaleId");
+
+                    b.ToTable("SoldChairs");
+                });
+
             modelBuilder.Entity("TicketSales.Models.Chair", b =>
                 {
                     b.HasOne("TicketSales.Models.Auditorium", null)
@@ -161,7 +204,21 @@ namespace TicketSales.Migrations
                     b.Navigation("Movie");
                 });
 
+            modelBuilder.Entity("TicketSales.Models.SoldChair", b =>
+                {
+                    b.HasOne("TicketSales.Models.Sale", null)
+                        .WithMany("Chairs")
+                        .HasForeignKey("SaleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("TicketSales.Models.Auditorium", b =>
+                {
+                    b.Navigation("Chairs");
+                });
+
+            modelBuilder.Entity("TicketSales.Models.Sale", b =>
                 {
                     b.Navigation("Chairs");
                 });
