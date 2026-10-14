@@ -1,3 +1,9 @@
+@*
+    Auditoriums.razor
+
+    Purpose: Allows users to create, edit, delete,
+    and update all Auditoriums available in the system.
+*@
 @page "/auditoriums"
 @rendermode InteractiveServer
 
@@ -72,7 +78,7 @@ else
 }
 <hr />
 <h2>Add Auditorium </h2>
-
+@* Add or Update Auditorium form *@
 <EditForm Model="@newAuditorium" onValidSubmit="@AddAuditorium" FormName="AuditoriumForm" class="marc">
     <DataAnnotationsValidator />
 
@@ -106,7 +112,7 @@ else
 
 @code {
     private Auditorium newAuditorium = new();
-    private bool isEditing; // To tarck if the instance is Editing
+    private bool isEditing; // To track if the instance is Editing
     private IReadOnlyList<Auditorium> AuditoriumList =>
         AuditoriumService.GetAuditoriums();
     private void AddAuditorium()

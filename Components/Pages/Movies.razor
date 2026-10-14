@@ -1,4 +1,11 @@
-﻿@page "/movies"
+﻿@*
+    Movies.razor
+
+    Purpose: Allows users to create, edit, delete,
+    and review all movies available in the system.
+*@
+
+@page "/movies"
 @rendermode InteractiveServer
 
 @using TicketSales.Models
@@ -14,6 +21,7 @@
 <p> Movies Movement Control </p>
 <hr />
 <h2> Available Movies </h2>
+@* Show a message when no movies exist. *@
 @if (MovieList.Count == 0)
 {
     <p> Movies list is Empty! </p>
@@ -24,6 +32,7 @@ else
         
     </table>
 }
+@* table  rendered always. *@
 <table class="table">
     <thead>
         <tr>
@@ -57,6 +66,7 @@ else
         }
     </tbody>
 </table>
+
 <hr />
 <div>
     <h2>Add Movie</h2>
@@ -132,8 +142,7 @@ else
 </div>
 @code {
     private Movie newMovie = new();
-    @* private List<Movie> movies = []; *@ // re
-    
+    @* private List<Movie> movies = []; *@     
     private bool isEditing;
     private IReadOnlyList<Movie> MovieList =>
         MovieService.GetMovies();
