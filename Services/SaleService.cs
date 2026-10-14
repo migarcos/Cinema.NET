@@ -64,13 +64,30 @@ public class SaleService
             .Where(s => s.SoldAt.Date == today)
             .Sum(s => s.Total);
     }
+    public decimal GetWeeklySales()
+    {
+        var startDate = DateTime.Today.AddDays(-7);
 
+        return context.Sales
+            .Where(s => s.SoldAt >= startDate)
+            .Sum(s => s.Total);
+    }
     public int GetDailyTickets()
     {
         var today = DateTime.Today;
 
         return context.Sales
             .Where(s => s.SoldAt.Date == today)
+            .SelectMany(s => s.Chairs)
+            .Count();
+    }
+
+    public int GetWeeklyTickets()
+    {
+        var startDate = DateTime.Today.AddDays(-7);
+
+        return context.Sales
+            .Where(s => s.SoldAt >= startDate)
             .SelectMany(s => s.Chairs)
             .Count();
     }

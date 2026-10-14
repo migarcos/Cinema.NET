@@ -22,6 +22,27 @@
 
         </div>
     </div>
+
+    <div class="col-md-4">
+        <div class="card text-center">
+
+            <div class="card-header">
+                Weekly Sales
+            </div>
+
+            <div class="card-body">
+                <h3>
+                    @SaleService.GetWeeklySales().ToString("C")
+                </h3>
+
+                <p>
+                    Tickets:
+                    @SaleService.GetWeeklyTickets()
+                </p>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 @code {
