@@ -1,0 +1,162 @@
+@page "/documentation"
+@rendermode InteractiveServer
+
+<PageTitle>User Guide</PageTitle>
+
+<h1 class="mb-4">Cinema.NET User Guide</h1>
+<div class="card mb-4">
+    <div class="card-header bg-doc text-white">
+        Introduction
+    </div>
+    <div class="card-body">
+        <p>
+            Cinema.NET is a movie theater management application that allows
+            users to manage movies, auditoriums, showings, ticket sales,
+            and business reports.
+        </p>
+    </div>
+</div>
+<div class="alert alert-info" id="0">
+    <strong>Contents</strong>
+
+    <ul class="mb-0">
+        <li><a href="documentation#1">Movie Management</a></li>
+        <li><a href="documentation#2">Auditorium Management</a></li>
+        <li><a href="documentation#3">Showings</a></li>
+        <li><a href="documentation#4">Ticket Sales</a></li>
+        <li><a href="documentation#5">Sales Reports</a></li>
+    </ul>
+</div>
+
+
+<div class="card mb-4">
+    <div class="card-header bg-doc text-white" id="1">
+        Movie Management
+    </div>
+    <div class="card-body">
+        <h5>Create Movie</h5>
+        <ol>
+            <li>Open the Movies page.</li>
+            <li>Enter movie information.</li>
+            <li>Click <strong>Create Movie</strong>.</li>
+        </ol>
+
+        <h5>Edit Movie</h5>
+        <ol>
+            <li>Click <strong>Edit</strong>.</li>
+            <li>Modify the movie information.</li>
+            <li>Click <strong>Update Movie</strong>.</li>
+        </ol>
+
+        <h5>Delete Movie</h5>
+        <ol>
+            <li>Click <strong>Delete</strong>.</li>
+            <li>The movie will be permanently removed.</li>
+        </ol>
+        <p><img src="img/movies.png" alt="movies" style="width: 50%;" loading="lazy"></p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header bg-doc text-white" id="2">
+        <a href="documentation#0" class="text-white"> ^ </a> &nbsp;  Auditorium Management        
+    </div>
+    <div class="card-body">
+        <ul>
+            <li>Create Auditoriums</li>
+            <li>Edit Auditoriums</li>
+            <li>Delete Auditoriums</li>
+            <li>Configure seating layouts</li>
+        </ul>
+        <p><img src="img/auditoriums.png" alt="auditoriums" style="width: 50%;" loading="lazy"></p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header bg-doc  text-white" id="3">
+        <a href="documentation#0" class="text-white"> ^ </a> &nbsp;  Showings
+    </div>
+    <div class="card-body">
+        <p>
+            Create a movie showing by selecting:
+        </p>
+
+        <ul>
+            <li>Movie</li>
+            <li>Auditorium</li>
+            <li>Date</li>
+            <li>Time</li>
+            <li>Ticket Price</li>
+        </ul>
+        <p><img src="img/showings.png" alt="showings" style="width: 50%;" loading="lazy"></p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header bg-doc text-white"  id="4">
+        <a href="documentation#0" class="text-white"> ^ </a> &nbsp;  Ticket Sales
+    </div>
+    <div class="card-body">
+
+        <h5>Seat Colors</h5>
+
+        <ul>
+            <li>
+                <span class="badge bg-success">Available</span>
+            </li>
+
+            <li>
+                <span class="badge bg-primary">Selected</span>
+            </li>
+
+            <li>
+                <span class="badge bg-secondary">Sold</span>
+            </li>
+        </ul>
+
+        <p>
+            Select one or more seats and click
+            <strong>Confirm Purchase</strong>.
+        </p>
+        <p><img src="img/sales.png" alt="sales" style="width: 50%;" loading="lazy"></p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header bg-doc text-white" id="5">
+        <a href="documentation#0" class="text-white"> ^ </a> &nbsp;  Sales Reports
+    </div>
+    <div class="card-body">
+
+        <h5>Available Reports</h5>
+
+        <ul>
+            <li>Daily Sales</li>
+            <li>Weekly Sales</li>
+            <li>Monthly Sales</li>
+        </ul>
+
+        <p>
+            Reports display revenue, tickets sold,
+            and transaction counts.
+        </p>
+        <p><img src="img/reports.png" alt="reports" style="width: 50%;" loading="lazy"></p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header bg-doc text-white">
+        <a href="documentation#0" class="text-white"> ^ </a> &nbsp;  Business Rules
+    </div>
+    <div class="card-body">
+
+        <ul>
+            <li>Movies must exist before creating a showing.</li>
+            <li>Auditoriums must exist before creating a showing.</li>
+            <li>Ticket prices must be greater than zero.</li>
+            <li>Sold seats cannot be sold again.</li>
+            <li>All information is stored in SQLite.</li>
+        </ul>
+
+    </div>
+</div>
