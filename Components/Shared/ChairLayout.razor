@@ -17,9 +17,8 @@
                 @foreach (var chair in row.OrderBy(c => c.Number))
                 {
                     @* <button type="button" class="chair" disabled="@(!chair.IsActive)"> @chair.Number </button> *@
-                    <button type="button" 
-                            class="@(IsSelected(chair) ? "chair-selected" : "chair")" 
-                            disabled="@(!chair.IsActive)"
+                    @* <button type="button" class="@(IsSelected(chair) ? "chair-selected" : "chair")" disabled="@(!chair.IsActive)" @onclick="() => OnChairClicked.InvokeAsync(chair)"> *@
+                    <button type="button" class="@GetChairClass(chair)" disabled="@(!chair.IsActive || IsSold(chair))"
                             @onclick="() => OnChairClicked.InvokeAsync(chair)">
                         @chair.Number
                     </button>
@@ -31,13 +30,33 @@
 }
 
 @code {
-    [Parameter]  public Auditorium? Auditorium { get; set; }
+    [Parameter] public Auditorium? Auditorium { get; set; }
     [Parameter] public EventCallback<Chair> OnChairClicked { get; set; }
     [Parameter] public List<SelectedChair> SelectedChairs { get; set; } = [];
+    [Parameter] public List<SoldChair> SoldChairs { get; set; } = [];
     private bool IsSelected(Chair chair)
     {
         return SelectedChairs.Any(x =>
             x.Row == chair.Row &&
             x.Number == chair.Number);
+    }
+    
+    @*   helper method   *@
+    private bool IsSold(Chair chair)
+    {
+        return SoldChairs.Any(x =>
+            x.Row == chair.Row &&
+            x.Number == chair.Number);
+    }
+
+    private string GetChairClass(Chair chair)
+    {
+        if (IsSold(chair))
+            return "chair-sold";
+
+        if (IsSelected(chair))
+            return "chair-selected";
+
+        return "chair";
     }
 }

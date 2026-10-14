@@ -46,4 +46,13 @@ public class SaleService
             .OrderByDescending(x => x.SoldAt)
             .ToList();
     }
+
+    //  a method to retrieve sold seats
+    public List<SoldChair> GetSoldChairsForShowing(Guid showingId)
+    {
+        return context.Sales
+            .Where(s => s.ShowingId == showingId)
+            .SelectMany(s => s.Chairs)
+            .ToList();
+    }
 }

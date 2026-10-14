@@ -49,3 +49,15 @@
 .chair:disabled {
     background-color: #6c757d;
 }
+
+.chair-sold {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 8px;
+
+    background-color: #6c757d;
+    color: white;
+
+    cursor: not-allowed;
+}

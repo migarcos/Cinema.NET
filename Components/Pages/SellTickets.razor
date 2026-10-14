@@ -48,7 +48,8 @@ else
             Unavailable
         </span>
     </div>
-    <ChairLayout Auditorium="@auditorium" SelectedChairs="@selectedChairs" OnChairClicked="SelectChair" />
+    <ChairLayout Auditorium="@auditorium" SelectedChairs="@selectedChairs" SoldChairs="@soldChairs"
+                 OnChairClicked="SelectChair" />
 }
 
 <hr />
@@ -84,10 +85,7 @@ else
     @Total.ToString("C")
 </h4>
 
-<button type="button" 
-    class="btn btn-success" 
-    disabled="@(!selectedChairs.Any())" 
-    @onclick="ConfirmPurchase" >
+<button type="button" class="btn btn-success" disabled="@(!selectedChairs.Any())" @onclick="ConfirmPurchase">
     Confirm Purchase
 </button>
 
@@ -95,6 +93,7 @@ else
     [Parameter] public Guid Id { get; set; }
     private List<SelectedChair> selectedChairs = [];
     private readonly List<Sale> sales = []; // save purchases in memory
+    private List<SoldChair> soldChairs = []; // Load sold seats
     // to calculate ticket total
     private decimal Total => showing is null ? 0 : selectedChairs.Count * showing.TicketPrice;
 
@@ -107,7 +106,10 @@ else
         if (showing is not null)
         {
             auditorium = AuditoriumService
-                .GetAuditorium(showing.AuditoriumId);
+                        .GetAuditorium(showing.AuditoriumId);
+
+            soldChairs = SaleService
+                        .GetSoldChairsForShowing(showing.Id);
         }
     }
 
@@ -134,11 +136,26 @@ else
 
     private void ConfirmPurchase()
     {
+    
         if (showing is null)
             return;
 
         if (selectedChairs.Count == 0)
             return;
+
+        var existingSoldSeats =
+            SaleService.GetSoldChairsForShowing(showing.Id);
+
+        var conflict =
+            selectedChairs.Any(selected =>
+                existingSoldSeats.Any(sold =>
+                    sold.Row == selected.Row &&
+                    sold.Number == selected.Number));
+
+        if (conflict)
+        {
+            return;
+        }
 
         SaleService.CreateSale(
             showing.Id,
@@ -146,5 +163,7 @@ else
             Total);
 
         selectedChairs.Clear();
+
+        soldChairs = SaleService.GetSoldChairsForShowing(showing.Id);
     }
 }
