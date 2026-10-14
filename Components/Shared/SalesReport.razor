@@ -1,0 +1,29 @@
+﻿@using TicketSales.Services
+@inject SaleService SaleService
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-center">
+
+            <div class="card-header">
+                Daily Sales
+            </div>
+
+            <div class="card-body">
+                <h3>
+                    @SaleService.GetDailySales().ToString("C")
+                </h3>
+
+                <p>
+                    Tickets:
+                    @SaleService.GetDailyTickets()
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@code {
+
+}

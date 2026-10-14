@@ -55,4 +55,23 @@ public class SaleService
             .SelectMany(s => s.Chairs)
             .ToList();
     }
+
+    public decimal GetDailySales()
+    {
+        var today = DateTime.Today;
+
+        return context.Sales
+            .Where(s => s.SoldAt.Date == today)
+            .Sum(s => s.Total);
+    }
+
+    public int GetDailyTickets()
+    {
+        var today = DateTime.Today;
+
+        return context.Sales
+            .Where(s => s.SoldAt.Date == today)
+            .SelectMany(s => s.Chairs)
+            .Count();
+    }
 }
