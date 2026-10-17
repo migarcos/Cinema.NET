@@ -1,0 +1,21 @@
+@inject SessionService Session
+@inject NavigationManager Navigation
+
+@if (Session.IsAuthenticated)
+{
+    @ChildContent
+}
+
+@code {
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (!Session.IsAuthenticated)
+        {
+            Navigation.NavigateTo("/login");
+        }
+    }
+}

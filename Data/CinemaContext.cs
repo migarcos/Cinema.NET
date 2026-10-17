@@ -16,4 +16,5 @@ public class CinemaContext : DbContext
     public DbSet<Showing> Showings => Set<Showing>();
     public DbSet<Sale> Sales => Set<Sale>();
     public DbSet<SoldChair> SoldChairs => Set<SoldChair>();
+    public DbSet<User> Users => Set<User>();    // Add the user table to DB
 }

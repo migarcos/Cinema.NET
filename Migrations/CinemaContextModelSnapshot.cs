@@ -173,6 +173,29 @@ namespace TicketSales.Migrations
                     b.ToTable("SoldChairs");
                 });
 
+            modelBuilder.Entity("TicketSales.Models.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("TicketSales.Models.Chair", b =>
                 {
                     b.HasOne("TicketSales.Models.Auditorium", null)

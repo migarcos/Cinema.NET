@@ -26,9 +26,16 @@ builder.Services.AddScoped<MovieService>();
 builder.Services.AddScoped<AuditoriumService>();
 builder.Services.AddScoped<ShowingService>();
 builder.Services.AddScoped<SaleService>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<SessionService>();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    UserSeed.Initialize(
+        scope.ServiceProvider);
+}
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
